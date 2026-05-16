@@ -18,11 +18,8 @@ from sklearn.metrics import (
 warnings.filterwarnings('ignore')
 sns.set_theme(style="whitegrid")
 
-print("✅ All libraries imported successfully.")
-
-
 print("\n" + "="*60)
-print("SECTION 2: DATA PREPARATION")
+print("SECTION 1: DATA PREPARATION")
 print("="*60)
 
 df = pd.read_csv('employee_attrition_dataset_10000.csv')
@@ -67,7 +64,7 @@ print(f"  Testing set:   {X_test.shape[0]} samples")
 
 
 print("\n" + "="*60)
-print("SECTION 3: MODEL TRAINING AND EVALUATION")
+print("SECTION 2: MODEL TRAINING AND EVALUATION")
 print("="*60)
 
 
@@ -104,33 +101,20 @@ def evaluate_model(name, model, X_train, X_test, y_train, y_test):
 
 results = []
 
-print("\n" + "="*60)
-print("MODEL 1: LOGISTIC REGRESSION")
-print("="*60)
-
 lr_model = LogisticRegression(random_state=42, max_iter=1000)
 lr_results = evaluate_model("Logistic Regression", lr_model, X_train, X_test, y_train, y_test)
 results.append(lr_results)
 
-print("\n" + "="*60)
-print("MODEL 2: DECISION TREE CLASSIFIER")
-print("="*60)
 
 dt_model = DecisionTreeClassifier(random_state=42, max_depth=5)
 dt_results = evaluate_model("Decision Tree", dt_model, X_train, X_test, y_train, y_test)
 results.append(dt_results)
 
-print("\n" + "="*60)
-print("MODEL 3: K-NEAREST NEIGHBORS (KNN)")
-print("="*60)
 
 knn_model = KNeighborsClassifier(n_neighbors=5)
 knn_results = evaluate_model("K-Nearest Neighbors (KNN)", knn_model, X_train, X_test, y_train, y_test)
 results.append(knn_results)
 
-print("\n" + "="*60)
-print("MODEL 4: NAIVE BAYES")
-print("="*60)
 
 nb_model = GaussianNB()
 nb_results = evaluate_model("Naive Bayes", nb_model, X_train, X_test, y_train, y_test)
@@ -138,7 +122,7 @@ results.append(nb_results)
 
 
 print("\n" + "="*60)
-print("SECTION 4: MODEL COMPARISON TABLE")
+print("SECTION 3: MODEL COMPARISON TABLE")
 print("="*60)
 
 results_df = pd.DataFrame(results)
@@ -173,7 +157,7 @@ plt.show()
 
 
 print("\n" + "="*60)
-print("SECTION 5: ANALYSIS AND DISCUSSION")
+print("SECTION 4: ANALYSIS AND DISCUSSION")
 print("="*60)
 
 best_acc_model = results_df['Accuracy'].idxmax()
@@ -185,26 +169,25 @@ best_rec_val = results_df['Recall'].max()
 best_f1_val  = results_df['F1 Score'].max()
 
 print(f"""
-📌 WHICH MODEL HAS THE HIGHEST ACCURACY?
+WHICH MODEL HAS THE HIGHEST ACCURACY?
    → {best_acc_model} with {best_acc_val*100:.2f}% accuracy.
 
-📌 WHICH MODEL HAS THE HIGHEST RECALL?
+WHICH MODEL HAS THE HIGHEST RECALL?
    → {best_rec_model} with a Recall of {best_rec_val:.4f}.
 
-📌 WHICH MODEL HAS THE MOST BALANCED PERFORMANCE?
+WHICH MODEL HAS THE MOST BALANCED PERFORMANCE?
    → {best_f1_model} with an F1 Score of {best_f1_val:.4f}.
 
-📌 WHICH MODEL SHOULD BE CARRIED FORWARD?
+WHICH MODEL SHOULD BE CARRIED FORWARD?
    → {best_f1_model} should be carried forward.
 """)
 
 
 print("\n" + "="*60)
-print("SECTION 6: REFLECTION")
+print("SECTION 5: REFLECTION")
 print("="*60)
 
 print("""
-REFLECTION PROMPT:
 "A model with the highest accuracy is not always the best model.
 Explain this statement using a classification example related to
 your PIT dataset."
@@ -212,37 +195,17 @@ your PIT dataset."
 ─────────────────────────────────────────────────────────────
 
 ANSWER:
-
-I think this statement really makes sense once you look at a real example
-like our Employee Attrition dataset.
-
-Our dataset has around 80% of employees who stayed (No) and only 20% who
-left (Yes). If a model just always predicts "No" for everyone without actually
-learning anything, it would already get 80% accuracy — which sounds pretty
-good on the surface, right?
-
-But here's the problem: that model caught zero employees who were going to
-leave. If the HR team used that model, they'd get a false sense of security
-and completely miss all the people at risk. No early interventions, no
-retention strategies — and then they lose employees anyway.
-
-That's why Recall matters so much in our case. Recall tells us: out of all
-the employees who actually left, how many did the model correctly identify?
-
-Let's say Model A has 84% accuracy but only 30% recall on the "Yes" class.
-Model B has 81% accuracy but 65% recall. Even though Model A looks better
-by accuracy, Model B is the one actually doing its job — it's finding more
-of the at-risk employees, which is literally the whole point.
-
-So for problems like this where missing a certain class has real-world
-consequences, we should prioritize Recall and F1 Score over accuracy alone.
-Accuracy is a good starting point, but it doesn't tell the full story —
-especially when the classes are imbalanced.
+High accuracy doesn’t always mean that the model is actually good, because accuracy only counts the correct
+predictions overall without showing where the model is truly failing. When a dataset is imbalanced, a model can
+score high accuracy simply by predicting the majority class every single time without learning anything that is
+useful. This is clearly seen with Logistic Regression in the activity, which obtained the highest accuracy at
+80.05% but had a Recall and F1 Score of 0.0000, which means that it failed to identify even one employee who
+was actually going to leave.
 """)
 
 
 print("\n" + "="*60)
-print("SECTION 7: CONCLUSION")
+print("SECTION 6: CONCLUSION")
 print("="*60)
 
 print(f"""

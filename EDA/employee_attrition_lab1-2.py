@@ -43,28 +43,24 @@ plt.show()
 
 print("=== Task 5: Generating 5 EDA Visualizations... ===")
 
-# 1. Overall Attrition Rate
 plt.figure(figsize=(6, 6))
 df['Attrition'].value_counts().plot.pie(autopct='%1.1f%%', colors=['#66b3ff','#ff9999'], startangle=90, explode=(0, 0.1))
 plt.title('1. Overall Workforce Attrition Rate')
 plt.ylabel('')
 plt.show()
 
-# 2. Workforce Distribution by Department
 plt.figure(figsize=(8, 5))
 sns.countplot(data=df, x='Department', hue='Attrition', palette='viridis')
 plt.title('2. Workforce Distribution by Department')
 plt.ylabel('Number of Employees')
 plt.show()
 
-# 3. Workforce by Job Role
 plt.figure(figsize=(8, 5))
 sns.countplot(data=df, x='Job_Role', hue='Attrition', palette='magma')
 plt.title('3. Workforce Distribution by Job Role')
 plt.ylabel('Number of Employees')
 plt.show()
 
-# 4. Monthly Income Distribution
 plt.figure(figsize=(8, 5))
 sns.histplot(data=df, x='Monthly_Income', hue='Attrition', bins=20, kde=True, multiple='stack', palette='Set2')
 plt.title('4. Monthly Income Distribution')
@@ -72,7 +68,6 @@ plt.xlabel('Monthly Income')
 plt.ylabel('Frequency')
 plt.show()
 
-# 5. Job Satisfaction Levels
 plt.figure(figsize=(8, 5))
 sns.countplot(data=df, x='Job_Satisfaction', hue='Attrition', palette='coolwarm')
 plt.title('5. Job Satisfaction Levels')
